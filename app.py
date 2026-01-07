@@ -13,7 +13,8 @@ from datetime import datetime
 # -----------------------------
 # Firebase Initialization
 # -----------------------------
-cred = credentials.Certificate("serviceAccountKey.json")
+cred_json = json.loads(os.environ["FIREBASE_CREDENTIALS"])
+cred = credentials.Certificate(cred_json)
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://faceattendance-a448f-default-rtdb.firebaseio.com/'
