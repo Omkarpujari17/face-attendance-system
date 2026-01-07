@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+    <style>
+        body { font-family: Arial; text-align: center; }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Teacher Dashboard</h2>
+
+<p>Attendance Status:
+<strong>{{ status }}</strong>
+</p>
+
+<form action="/start_attendance" method="POST">
+    <button type="submit">Start Attendance</button>
+</form>
+
+<form action="/stop_attendance" method="POST">
+    <button type="submit">Stop Attendance</button>
+</form>
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>
