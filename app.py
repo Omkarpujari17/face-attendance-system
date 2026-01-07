@@ -8,6 +8,11 @@ from flask import render_template
 
 from flask import  redirect, url_for, session
 
+
+DATASET_PATH = "dataset"
+os.makedirs(DATASET_PATH, exist_ok=True)
+
+
 import firebase_admin
 from firebase_admin import credentials, db
 from datetime import datetime
@@ -61,6 +66,66 @@ CONFIDENCE_THRESHOLD = 70
 @app.route('/')
 def home():
     return "Face Attendance Backend Running"
+
+
+@app.route('/add_student')
+def add_student():
+    if not session.get('teacher'):
+        return redirect(url_for('teacher_login'))
+    return render_template('add_student.html')
+
+
+@app.route('/save_student_image', methods=['POST'])
+def save_student_image():
+    name = request.form['name']
+    image = request.files['image']
+
+    student_dir = os.path.join(DATASET_PATH, name)
+    os.makedirs(student_dir, exist_ok=True)
+
+    img_array = np.frombuffer(image.read(), np.uint8)
+    img = cv2.imdecode(img_array, cv2.IMREAD_GRAYSCALE)
+
+    count = len(os.listdir(student_dir))
+    img_path = os.path.join(student_dir, f"{count+1}.jpg")
+
+    cv2.imwrite(img_path, img)
+
+    return "Saved"
+
+
+@app.route('/train_model', methods=['POST'])
+def train_model():
+    faces = []
+    labels = []
+    label_map = {}
+    current_label = 0
+
+    for student in os.listdir(DATASET_PATH):
+        student_path = os.path.join(DATASET_PATH, student)
+        if not os.path.isdir(student_path):
+            continue
+
+        label_map[current_label] = student
+
+        for img_name in os.listdir(student_path):
+            img_path = os.path.join(student_path, img_name)
+            img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+            faces.append(img)
+            labels.append(current_label)
+
+        current_label += 1
+
+    recognizer = cv2.face.LBPHFaceRecognizer_create()
+    recognizer.train(faces, np.array(labels))
+
+    recognizer.save("model/lbph_face_model.yml")
+
+    import pickle
+    with open("model/label_map.pkl", "wb") as f:
+        pickle.dump(label_map, f)
+
+    return redirect(url_for('teacher_dashboard'))
 
 
 @app.route('/student')
