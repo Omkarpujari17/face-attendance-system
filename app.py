@@ -50,12 +50,18 @@ else:
 # -----------------------------
 import firebase_admin
 from firebase_admin import credentials, db
+# /---------------------------
+firebase_creds = os.environ.get("FIREBASE_CREDENTIALS")
 
-cred = credentials.Certificate("FIREBASE_CREDENTIALS.json")
+if not firebase_creds:
+    raise ValueError("Firebase credentials not found in environment variables")
+cred_dict = json.loads(firebase_creds)
+cred = credentials.Certificate(cred_dict)
+# -----------------------------
+# cred = credentials.Certificate("FIREBASE_CREDENTIALS.json")
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://faceattendance-a448f-default-rtdb.firebaseio.com/"
 })
-
 # -----------------------------
 # Attendance State
 # -----------------------------
