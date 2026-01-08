@@ -3,44 +3,221 @@
 <head>
     <title>Teacher Dashboard</title>
     <style>
-        body { font-family: Arial; text-align: center; }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        /* Header */
+        .header {
+            background-color: #1f2937;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            background-color: #ef4444;
+            padding: 8px 14px;
+            border-radius: 5px;
+        }
+
+        /* Main Container */
+        .container {
+            padding: 30px;
+        }
+
+        /* Status Card */
+        .status {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .open {
+            color: green;
+            font-weight: bold;
+        }
+
+        .closed {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Action Cards */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+        }
+
+        .card button, .card a {
+            display: inline-block;
+            padding: 10px 18px;
+            font-size: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-blue { background-color: #3b82f6; }
+        .btn-green { background-color: #22c55e; }
+        .btn-yellow { background-color: #f59e0b; }
+        .btn-red { background-color: #ef4444; }
+
+        /* Section Box */
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
 
-<h2>Teacher Dashboard</h2>
+<!-- Header -->
+<div class="header">
+    <h2>Face Attendance – Teacher Dashboard</h2>
+    <a href="/logout">Logout</a>
+</div>
 
-<p>Attendance Status:
-<strong>{{ status }}</strong>
-</p>
+<div class="container">
 
-<form action="/start_attendance" method="POST">
-    <button type="submit">Start Attendance</button>
-</form>
+    <!-- Attendance Status -->
+    <div class="status">
+        Attendance Status:
+        {% if status == "OPEN" %}
+            <span class="open">OPEN</span>
+        {% else %}
+            <span class="closed">CLOSED</span>
+        {% endif %}
+    </div>
 
-<form action="/stop_attendance" method="POST">
-    <button type="submit">Stop Attendance</button>
-</form>
+    <!-- Action Cards -->
+    <div class="actions">
 
-<hr>
+        <div class="card">
+            <h3>Add New Student</h3>
+            <a href="/add_student" class="btn-blue">Add Student</a>
+        </div>
 
-<h3>Add New Student</h3>
+        <div class="card">
+            <h3>Train Face Model</h3>
+            <form action="/train_model" method="POST">
+                <button class="btn-yellow">Train Model</button>
+            </form>
+        </div>
 
-<form action="/add_student" method="GET">
-    <button type="submit">Add Student</button>
-</form>
+        <div class="card">
+            <h3>Start Attendance</h3>
+            <form action="/start_attendance" method="POST">
+                <button class="btn-green">Start</button>
+            </form>
+        </div>
 
-<form action="/train_model" method="POST">
-    <button type="submit">Train Model</button>
-</form>
+        <div class="card">
+            <h3>Stop Attendance</h3>
+            <form action="/stop_attendance" method="POST">
+                <button class="btn-red">Stop</button>
+            </form>
+        </div>
 
+    </div>
 
-<a href="/logout">Logout</a>
+    <!-- Registered Students -->
+    <div class="section">
+        <h3>Registered Students</h3>
+
+        {% if students %}
+            <ul>
+                {% for s in students %}
+                    <li>
+                        <strong>{{ s.name }}</strong> – {{ s.count }} images
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No students added yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Today's Attendance -->
+    <div class="section">
+        <h3>Today's Attendance</h3>
+
+        {% if today_attendance %}
+            <ul>
+                {% for name in today_attendance %}
+                    <li>✔ {{ name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No attendance marked today.</p>
+        {% endif %}
+    </div>
+
+    <!-- Attendance Percentage -->
+    <div class="section">
+        <h3>Attendance Percentage</h3>
+
+        {% if percentages %}
+            <ul>
+                {% for name, percent in percentages.items() %}
+                    <li>{{ name }} – {{ percent }}%</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No attendance data available.</p>
+        {% endif %}
+    </div>
+
+</div>
 
 </body>
 </html>
