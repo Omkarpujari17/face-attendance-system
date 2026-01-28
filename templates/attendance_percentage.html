@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Percentage</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 85%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Attendance Percentage Report</h2>
+    <p><b>Total Working Days:</b> {{ total_days }}</p>
+
+    <table>
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Present Days</th>
+            <th>Total Days</th>
+            <th>Percentage (%)</th>
+        </tr>
+
+        {% for r in report %}
+        <tr>
+            <td>{{ r.student_id }}</td>
+            <td>{{ r.student_name }}</td>
+            <td>{{ r.present_days }}</td>
+            <td>{{ r.total_days }}</td>
+            <td>{{ r.percentage }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/teacher_dashboard">⬅ Back to Dashboard</a>
+
+</body>
+</html>

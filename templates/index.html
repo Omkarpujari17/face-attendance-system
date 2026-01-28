@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    Face Recognition Attendance System
+</div>
+
+<!-- Centered Page -->
+<div class="page-wrapper">
+    <div class="container">
+
+        <div class="card">
+            <h2>Welcome</h2>
+            <p style="text-align:center;">
+                Please select your role to continue
+            </p>
+
+            <button class="btn btn-primary" onclick="location.href='/teacher_login'">
+                Teacher Login
+            </button>
+
+            <button class="btn btn-success" onclick="location.href='/student'">
+                Student Attendance
+            </button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

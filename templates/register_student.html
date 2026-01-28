@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+<div class="header">
+    Register Student
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <label>Student ID</label>
+        <input type="text" id="student_id">
+
+        <label>Student Name</label>
+        <input type="text" id="student_name">
+
+        <video id="video" width="100%" autoplay></video>
+
+        <button class="btn btn-primary" onclick="registerStudent()">
+            Capture & Save Face
+        </button>
+
+        <p class="info">
+            Capture 3–5 images from different angles
+        </p>
+
+        <p id="result"></p>
+    </div>
+
+    <a href="/teacher_dashboard">⬅ Back</a>
+</div>
+
+<script src="{{ url_for('static', filename='capture_register.js') }}"></script>
+ </div>
+    </div>
+</div>
+</body>
+</html>

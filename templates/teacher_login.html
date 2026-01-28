@@ -1,24 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Teacher Login</title>
-    <style>
-        body { font-family: Arial; text-align: center; }
-        input { padding: 8px; margin: 5px; }
-        button { padding: 8px 15px; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h2>Teacher Login</h2>
+<!-- Header -->
+<div class="header">
+    Face Recognition Attendance System
+</div>
 
-<form method="POST">
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <button type="submit">Login</button>
-</form>
+<!-- Centered Page -->
+<div class="page-wrapper">
+    <div class="container">
 
-<p style="color:red;">{{ error }}</p>
+        <div class="card">
+            <h2>Teacher Login</h2>
+
+            <form method="post">
+                <label>Teacher ID</label>
+                <input type="text" name="teacher_id" placeholder="Enter Teacher ID" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter Password" required>
+
+                <button class="btn btn-primary" type="submit">
+                    Login
+                </button>
+            </form>
+
+            {% if error %}
+                <p style="color:red; text-align:center; margin-top:10px;">
+                    {{ error }}
+                </p>
+            {% endif %}
+        </div>
+
+        <a href="/">⬅ Back to Home</a>
+
+    </div>
+</div>
 
 </body>
 </html>

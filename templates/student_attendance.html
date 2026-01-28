@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    Face Recognition Attendance System
+</div>
+
+<!-- Centered Page -->
+<div class="page-wrapper">
+    <div class="container">
+
+        <div class="card">
+            <h2>Student Attendance</h2>
+            <p>Please look at the camera and click the button below.</p>
+
+            <video id="video" autoplay></video>
+
+            <button class="btn btn-success" onclick="markAttendance()">
+                Mark Attendance
+            </button>
+
+            <p id="result" style="text-align:center; font-weight:600;"></p>
+        </div>
+
+        <a href="/">⬅ Back to Home</a>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='capture_student.js') }}"></script>
+</body>
+</html>
