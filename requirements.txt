@@ -1,11 +1,14 @@
 flask
+gunicorn
 opencv-python-headless
 numpy
-torch
-torchvision
-facenet-pytorch
 scikit-learn
-firebase-admin
 pandas
 openpyxl
-gunicorn
+firebase-admin
+
+# CPU-only PyTorch
+torch==2.2.2
+torchvision==0.17.2
+
+facenet-pytorch
