@@ -49,7 +49,7 @@ firebase_key = json.loads(os.environ.get("FIREBASE_KEY"))
 cred = credentials.Certificate(firebase_key)
 
 firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://face-attendance-system-33903-default-rtdb.firebaseio.com//"
+    "databaseURL": "https://face-attendance-system-33903-default-rtdb.firebaseio.com/"
 })
 
 # =============================
