@@ -31,11 +31,26 @@ app.secret_key = "secret123"
 # firebase_admin.initialize_app(cred, {
 #     "databaseURL": "https://face-attendance-system-33903-default-rtdb.firebaseio.com//"
 # })
-import json
-from firebase_admin import credentials
+
+
+# import json
+# from firebase_admin import credentials
+
+# firebase_key = json.loads(os.environ.get("FIREBASE_KEY"))
+# cred = credentials.Certificate(firebase_key)
+
+
+import json, os
+import firebase_admin
+from firebase_admin import credentials, db
 
 firebase_key = json.loads(os.environ.get("FIREBASE_KEY"))
+
 cred = credentials.Certificate(firebase_key)
+
+firebase_admin.initialize_app(cred, {
+    "databaseURL": "https://face-attendance-system-33903-default-rtdb.firebaseio.com//"
+})
 
 # =============================
 # LOCAL FILE (TEACHERS ONLY)
