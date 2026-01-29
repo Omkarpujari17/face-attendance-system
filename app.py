@@ -40,12 +40,14 @@ app.secret_key = "secret123"
 # cred = credentials.Certificate(firebase_key)
 
 
-import json, os
+import os, json
 import firebase_admin
 from firebase_admin import credentials, db
 
-firebase_key = json.loads(os.environ.get("FIREBASE_KEY").strip("'"))
+firebase_key_path = os.environ.get("FIREBASE_KEY")
 
+with open(firebase_key_path, "r") as f:
+    firebase_key = json.load(f)
 
 cred = credentials.Certificate(firebase_key)
 
