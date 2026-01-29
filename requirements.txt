@@ -7,8 +7,8 @@ pandas
 openpyxl
 firebase-admin
 
-# CPU-only PyTorch
-torch==2.2.2
-torchvision==0.17.2
+# CPU-only PyTorch (Python 3.10 compatible)
+torch==2.1.2
+torchvision==0.16.2
 
 facenet-pytorch
