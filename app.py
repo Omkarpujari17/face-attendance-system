@@ -44,7 +44,8 @@ import json, os
 import firebase_admin
 from firebase_admin import credentials, db
 
-firebase_key = json.loads(os.environ.get("FIREBASE_KEY"))
+firebase_key = json.loads(os.environ.get("FIREBASE_KEY").strip("'"))
+
 
 cred = credentials.Certificate(firebase_key)
 
